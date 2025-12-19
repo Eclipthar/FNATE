@@ -22,15 +22,15 @@ Five Nights At The Experiments is a fan-made horror game inspired by the Five Ni
 
 ## Installation
 
-[Add installation instructions here]
+[Wait For Offical Release or Open Project In Godot.]
 
 ## Controls
 
-[Add control scheme here]
+[UNKNOWN]
 
 ## Credits
 
-[Add your credits here]
+Eclipthar - Lead Dev
 
 ## Disclaimer
 
