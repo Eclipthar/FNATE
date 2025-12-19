@@ -32,6 +32,7 @@ Five Nights At The Experiments is a fan-made horror game inspired by the Five Ni
 
 Eclipthar - Lead Dev
 
-## Disclaimer
+## 🚨Disclaimer🚨
+
 
 This is an unofficial fan game and is not affiliated with Scott Cawthon or the official Five Nights at Freddy's franchise.
