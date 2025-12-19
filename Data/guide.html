@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Five Nights At The Experiments - Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: #141516;
+            color: #dcddde;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #2f3136;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            background: #202225;
+            padding: 40px;
+            border-bottom: 1px solid #202225;
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            color: #b9bbbe;
+            font-size: 1em;
+            font-weight: 400;
+        }
+
+        .content {
+            padding: 32px 40px 40px;
+        }
+
+        .warning {
+            background: #f04747;
+            color: #ffffff;
+            padding: 16px 20px;
+            margin-bottom: 32px;
+            border-radius: 4px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .warning-icon {
+            font-size: 1.2em;
+        }
+
+        .animatronic {
+            background: #40444b;
+            border-radius: 8px;
+            padding: 32px;
+            margin-bottom: 24px;
+            border-left: 4px solid #7289da;
+        }
+
+        .animatronic.special {
+            border-left-color: #faa61a;
+        }
+
+        .animatronic h2 {
+            color: #ffffff;
+            font-size: 1.75em;
+            font-weight: 600;
+            margin-bottom: 24px;
+            letter-spacing: -0.3px;
+        }
+
+        .section-title {
+            color: #7289da;
+            font-size: 0.75em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 24px;
+            margin-bottom: 12px;
+        }
+
+        .animatronic.special .section-title {
+            color: #faa61a;
+        }
+
+        .mechanics {
+            background: #2f3136;
+            padding: 16px 20px;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            line-height: 1.6;
+            color: #dcddde;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .stat-box {
+            background: #2f3136;
+            padding: 20px;
+            border-radius: 4px;
+            border: 1px solid #202225;
+        }
+
+        .stat-label {
+            color: #b9bbbe;
+            font-size: 0.85em;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .tip {
+            background: #3ba55d;
+            color: #ffffff;
+            padding: 16px 20px;
+            margin-top: 20px;
+            border-radius: 4px;
+            line-height: 1.6;
+        }
+
+        .tip-label {
+            font-weight: 700;
+            margin-right: 4px;
+        }
+
+        .critical-box {
+            background: #faa61a;
+            color: #2f3136;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        .critical-box strong {
+            font-weight: 700;
+            color: #2f3136;
+        }
+
+        ul {
+            margin-top: 12px;
+            margin-left: 24px;
+            line-height: 1.8;
+        }
+
+        li {
+            margin: 6px 0;
+        }
+
+        strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        footer {
+            background: #202225;
+            text-align: center;
+            padding: 32px;
+            color: #72767d;
+            border-top: 1px solid #202225;
+        }
+
+        footer p {
+            margin: 8px 0;
+        }
+
+        footer p:last-child {
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Five Nights At The Experiments</h1>
+            <p class="subtitle">Survival Guide - Know Your Threats</p>
+        </div>
+
+        <div class="content">
+            <div class="warning">
+                <span class="warning-icon">⚠️</span>
+                <span><strong>WARNING:</strong> These animatronics are highly unpredictable. Study their patterns carefully. Your survival depends on it.</span>
+            </div>
+
+            <div class="animatronic">
+                <h2>Darkbear</h2>
+                
+                <div class="section-title">Behavior Pattern</div>
+                <div class="mechanics">
+                    Darkbear begins his night on the main stage, remaining completely stationary for a calculated period. Once active, he prefers the shadows and tight spaces of the facility.
+                </div>
+
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-label">Starting Location</div>
+                        <div class="stat-value">Main Stage</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Hiding Spot</div>
+                        <div class="stat-value">Supply Closet</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Movement Chance</div>
+                        <div class="stat-value">1/4 per 10 sec</div>
+                    </div>
+                </div>
+
+                <div class="section-title">Activation Time</div>
+                <div class="mechanics">
+                    Darkbear waits on stage for exactly <strong>60 seconds ÷ AI Level</strong> before becoming active. Once this timer expires, he gains a <strong>100% movement chance</strong> regardless of AI level.
+                </div>
+
+                <div class="section-title">Movement Mechanics</div>
+                <div class="mechanics">
+                    After activation, Darkbear moves through the facility with a <strong>25% chance every 10 seconds ÷ AI Level</strong>. He gravitates toward the supply closet as his primary hiding location.
+                </div>
+
+                <div class="section-title">Counter Strategy</div>
+                <div class="tip">
+                    <span class="tip-label">💡 TIP:</span>
+                    When Darkbear appears in the hallway, immediately activate the <strong>SCARE SOUND</strong>. This will force him to retreat back to the supply closet, resetting his position.
+                </div>
+            </div>
+
+            <div class="animatronic special">
+                <h2>Golden Bear</h2>
+                
+                <div class="section-title">Behavior Pattern</div>
+                <div class="mechanics">
+                    Golden Bear is a rare and extremely dangerous anomaly. Unlike other animatronics, he does not follow the camera system and cannot be tracked through conventional means. He appears randomly and without warning.
+                </div>
+
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-label">Appearance Type</div>
+                        <div class="stat-value">Random Event</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Warning Signs</div>
+                        <div class="stat-value">Audio Distortion</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Threat Level</div>
+                        <div class="stat-value">CRITICAL</div>
+                    </div>
+                </div>
+
+                <div class="section-title">Manifestation</div>
+                <div class="mechanics">
+                    Golden Bear has a <strong>1% chance per minute</strong> to manifest in your office, increased by <strong>0.5% for each hour survived</strong>. When he appears, you'll hear distinctive audio distortion and crackling sounds. He materializes as a golden, translucent figure standing motionless in the corner of your office.
+                </div>
+
+                <div class="section-title">Interaction Rules</div>
+                <div class="mechanics">
+                    <strong>DO NOT LOOK DIRECTLY AT GOLDEN BEAR.</strong> If he appears on your monitor or in your peripheral vision, you must immediately:
+                    <ul>
+                        <li>Lower your monitor</li>
+                        <li>Check if he is in your office? If Yes, your done for.</li>
+                        <li>Wait for the audio distortion to fade (approximately 10-15 seconds)</li>
+                    </ul>
+                </div>
+
+                <div class="critical-box">
+                    <strong>⚠️ CRITICAL:</strong> Looking directly at Golden Bear or keeping your monitor up while he's present for more than <strong>2 SECONDS</strong> will result in an immediate game over. There is no escape once 2 seconds of eye contact is established.
+                </div>
+
+                <div class="tip">
+                    <span class="tip-label">💡 TIP:</span>
+                    Listen carefully for audio cues. The moment you hear static or distortion, close your monitor and look away. Golden Bear punishes those who rely too heavily on the camera system. Trust your ears more than your eyes. You have only a 2-second window before it's too late.
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Good luck, night guard. You'll need it.</p>
+            <p>Just remember, this is for 1983$ per day</p>
+            <p>- Management</p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+                        <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+                        <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p>they didnt know.</p>
+
+        </footer>
+    </div>
+</body>
+</html>

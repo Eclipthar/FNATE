@@ -15,7 +15,17 @@ config/version="v2026.2"
 run/main_scene="uid://b6ded0rmsxkas"
 config/features=PackedStringArray("4.5", "Forward Plus")
 boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/show_image=false
 boot_splash/fullsize=false
 boot_splash/use_filter=false
 boot_splash/image="uid://b8301jj2g5112"
 config/icon="uid://b8301jj2g5112"
+
+[autoload]
+
+Global="*res://Global/Global.gd"
+
+[display]
+
+window/size/resizable=false
+window/size/borderless=true

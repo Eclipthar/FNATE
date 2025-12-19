@@ -1,10 +1,32 @@
-[gd_scene load_steps=7 format=3 uid="uid://b6ded0rmsxkas"]
+[gd_scene load_steps=11 format=3 uid="uid://b6ded0rmsxkas"]
 
 [ext_resource type="Script" uid="uid://cuel0u1duefdm" path="res://Scripts/mainmenu.gd" id="1_3pujl"]
 [ext_resource type="Texture2D" uid="uid://b8ac1idu2nkck" path="res://Textures/mainbear1.png" id="1_d2nv2"]
 [ext_resource type="Shader" uid="uid://dqhjq6dqw4r56" path="res://mainmenu.gdshader" id="2_wgsso"]
 [ext_resource type="FontFile" uid="uid://bj6qoebog85yv" path="res://Fonts/PixelifySans-VariableFont_wght.ttf" id="3_wgsso"]
 [ext_resource type="Texture2D" uid="uid://cr7gttm8lhxj7" path="res://Textures/Disclaimer.png" id="5_7uvds"]
+[ext_resource type="Texture2D" uid="uid://cm3qt8b67dso6" path="res://Textures/continue.png" id="6_at6rn"]
+[ext_resource type="Texture2D" uid="uid://cieexihiryjc" path="res://Textures/newgame.png" id="7_dihg0"]
+[ext_resource type="Script" uid="uid://dqnyoloqek7gt" path="res://Scripts/gamebuttons.gd" id="8_dihg0"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rqglp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_at6rn")
+}],
+"loop": true,
+"name": &"continue",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_dihg0")
+}],
+"loop": true,
+"name": &"newgame",
+"speed": 0.0
+}]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_igs2m"]
 shader = ExtResource("2_wgsso")
@@ -65,13 +87,12 @@ theme_override_font_sizes/font_size = 16
 text = "Made by the Game Dev Team : Zenroot. 
 "
 
-[node name="ColorRect" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_igs2m")
-layout_mode = 0
-offset_left = -147.0
-offset_top = -184.0
-offset_right = 1269.0
-offset_bottom = 746.0
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(223, 461)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_rqglp")
+animation = &"newgame"
+script = ExtResource("8_dihg0")
 
 [node name="Disclaimer" type="TextureRect" parent="."]
 visible = false
@@ -83,3 +104,11 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_7uvds")
 expand_mode = 1
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_igs2m")
+layout_mode = 0
+offset_left = -138.0
+offset_top = -178.0
+offset_right = 1278.0
+offset_bottom = 752.0

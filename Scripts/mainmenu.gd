@@ -1,13 +1,23 @@
 extends Control
 @onready var disclaimer: TextureRect = $Disclaimer
-
 func wait(seconds: float):
 	await get_tree().create_timer(seconds).timeout
+	
+@onready var mainbear_1: Sprite2D = $Mainbear1
+
+# Add your different sprite textures here
+var bear_sprites: Array[Texture2D] = []
+var default_sprite: Texture2D
+var twitch_timer: float = 0.0
+var twitch_interval: float = 1.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	disclaimer.visible = true
 	disclaimer.modulate = Color.BLACK
+	
+	# Save the default sprite automatically
+	default_sprite = mainbear_1.texture
 	
 	# Fade from black to white over 2 seconds
 	var tween = create_tween()
@@ -16,9 +26,36 @@ func _ready() -> void:
 	
 	# Wait 3 seconds at full white
 	await wait(5)
-
 	disclaimer.visible = false
+	
+	# Load your bear sprite variations (add your texture paths)
+	bear_sprites.append(preload("res://Textures/mainbear1.png"))
+	bear_sprites.append(preload("res://Textures/mainbear2.png"))
+	bear_sprites.append(preload("res://Textures/mainbear3.png"))
+	
+	# Set initial random interval
+	twitch_interval = randf_range(3.0, 7.0)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	twitch_timer += delta
+	
+	if twitch_timer >= twitch_interval:
+		twitch_bear()
+		twitch_timer = 0.0
+		# Set new random interval between 3 and 7 seconds (average ~5)
+		twitch_interval = randf_range(3.0, 5.0)
+
+func twitch_bear() -> void:
+	if bear_sprites.size() == 0:
+		return
+	
+	# Change to random sprite variant
+	var random_sprite = bear_sprites[randi() % bear_sprites.size()]
+	mainbear_1.texture = random_sprite
+	
+	# Wait a brief moment (twitch duration)
+	await wait(randf_range(0.01, 0.22))
+	
+	# Reset back to default sprite
+	mainbear_1.texture = default_sprite
