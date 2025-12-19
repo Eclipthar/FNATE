@@ -11,6 +11,11 @@ config_version=5
 [application]
 
 config/name="FNAF : The Experiments"
+config/version="v2026.2"
 run/main_scene="uid://b6ded0rmsxkas"
 config/features=PackedStringArray("4.5", "Forward Plus")
-config/icon="res://icon.svg"
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/fullsize=false
+boot_splash/use_filter=false
+boot_splash/image="uid://b8301jj2g5112"
+config/icon="uid://b8301jj2g5112"
