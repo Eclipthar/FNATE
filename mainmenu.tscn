@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6ded0rmsxkas"]
+
+[ext_resource type="Texture2D" uid="uid://b8ac1idu2nkck" path="res://Textures/mainbear1.png" id="1_d2nv2"]
+[ext_resource type="Shader" uid="uid://dqhjq6dqw4r56" path="res://mainmenu.gdshader" id="2_wgsso"]
+[ext_resource type="FontFile" uid="uid://bj6qoebog85yv" path="res://Fonts/PixelifySans-VariableFont_wght.ttf" id="3_wgsso"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_igs2m"]
+shader = ExtResource("2_wgsso")
+shader_parameter/scanline_color = Color(0, 0, 0, 1)
+shader_parameter/flicker_color = Color(1, 1, 1, 1)
+shader_parameter/scanlines_count = 10.0
+shader_parameter/scanlines_intensity = 0.05
+shader_parameter/flicker_speed = 30.0
+shader_parameter/flicker_intensity = 0.025
+shader_parameter/color_offset = 1.5
+shader_parameter/blur = 0.15
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Mainbear1" type="Sprite2D" parent="."]
+position = Vector2(515, 367.00003)
+scale = Vector2(0.6953125, 0.72037035)
+texture = ExtResource("1_d2nv2")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 18.0
+offset_right = 518.0
+offset_bottom = 306.0
+theme_override_fonts/font = ExtResource("3_wgsso")
+theme_override_font_sizes/font_size = 78
+text = "Five Nights
+At The 
+Experiments"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_igs2m")
+layout_mode = 0
+offset_right = 1219.0
+offset_bottom = 754.0

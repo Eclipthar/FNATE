@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://du50o6yp5yasd"]
+
+[ext_resource type="ArrayMesh" uid="uid://12fk746ah4lx" path="res://Models/EX-1/ex-1.obj" id="1_cuaq7"]
+
+[node name="3DTemplates" type="Node3D"]
+
+[node name="Ex1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.008993626, 0, 0.05780554)
+mesh = ExtResource("1_cuaq7")
