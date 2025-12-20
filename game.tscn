@@ -1,0 +1,147 @@
+[gd_scene load_steps=21 format=3 uid="uid://c2fqhyc2rx8uu"]
+
+[ext_resource type="Script" uid="uid://nrsjals5vv1i" path="res://game.gd" id="1_80nbo"]
+[ext_resource type="Texture2D" uid="uid://bggw4gxxijyjm" path="res://Textures/Office/officewithpowernodarkbear.png" id="2_e2o6t"]
+[ext_resource type="Texture2D" uid="uid://dt73pdoquhilf" path="res://Textures/Office/officewithpowerwithdarkbear.png" id="3_feb5d"]
+[ext_resource type="Texture2D" uid="uid://dmrfolnlalx23" path="res://Textures/Cameras/cam1_0.png" id="4_eow3j"]
+[ext_resource type="Texture2D" uid="uid://bl0tk7dujq80i" path="res://Textures/Office/officewithoutpowerwithdarkbear.png" id="4_vef74"]
+[ext_resource type="Texture2D" uid="uid://4wvv32b0lhhd" path="res://Textures/Office/officewithoutpowerwithoutdarkbear.png" id="5_hve3p"]
+[ext_resource type="Texture2D" uid="uid://bhmyy538opiso" path="res://Textures/Cameras/cam1_1.png" id="5_j5wjh"]
+[ext_resource type="Texture2D" uid="uid://d4ni7fm15byp4" path="res://Textures/Office/jumpscare.png" id="6_80cx4"]
+[ext_resource type="Script" uid="uid://b1s58pitonx5w" path="res://camera.gd" id="6_mfdv2"]
+[ext_resource type="Texture2D" uid="uid://cas5ws1l2drit" path="res://Textures/GUICams.png" id="6_vef74"]
+[ext_resource type="Shader" uid="uid://bn5sg8tw0ee8s" path="res://camera.gdshader" id="7_eow3j"]
+[ext_resource type="FontFile" uid="uid://bj6qoebog85yv" path="res://Fonts/PixelifySans-VariableFont_wght.ttf" id="9_hve3p"]
+[ext_resource type="Texture2D" uid="uid://lr6stdj3aq55" path="res://Textures/Cameras/cam2_0.png" id="9_lc2xo"]
+[ext_resource type="Texture2D" uid="uid://wv23wqfg0dgo" path="res://Textures/Cameras/cam2_1.png" id="10_215e1"]
+[ext_resource type="Texture2D" uid="uid://cjnv6ev00cp2b" path="res://Textures/Cameras/cam3_0.png" id="11_7sc4i"]
+[ext_resource type="Texture2D" uid="uid://deybvwncsm7es" path="res://Textures/Cameras/cam3_1.png" id="12_80cx4"]
+[ext_resource type="AudioStream" uid="uid://ce6k1g32dcvtk" path="res://Audio/Blip5.wav" id="17_e8heu"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fc0e3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_e2o6t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_feb5d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_vef74")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_hve3p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_80cx4")
+}],
+"loop": false,
+"name": &"default",
+"speed": 0.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mfdv2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_eow3j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_j5wjh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_lc2xo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_215e1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_7sc4i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_80cx4")
+}],
+"loop": false,
+"name": &"default",
+"speed": 0.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j5wjh"]
+shader = ExtResource("7_eow3j")
+shader_parameter/scanline_color = Color(0.27752772, 0.27752772, 0.27752772, 1)
+shader_parameter/flicker_color = Color(1, 1, 1, 1)
+shader_parameter/scanlines_count = 5.0
+shader_parameter/scanlines_intensity = 0.1
+shader_parameter/flicker_speed = 20.0
+shader_parameter/flicker_intensity = 0.1670000079325
+shader_parameter/color_offset = 2.0
+shader_parameter/blur = 0.15
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_80nbo")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(576, 324)
+scale = Vector2(0.6, 0.6)
+sprite_frames = SubResource("SpriteFrames_fc0e3")
+frame_progress = 0.7386845
+
+[node name="Camera" type="Node2D" parent="."]
+script = ExtResource("6_mfdv2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Camera"]
+position = Vector2(576, 324)
+scale = Vector2(0.6, 0.6)
+sprite_frames = SubResource("SpriteFrames_mfdv2")
+
+[node name="Sprite2D" type="Sprite2D" parent="Camera"]
+texture_filter = 1
+position = Vector2(576, 324)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("6_vef74")
+
+[node name="ColorRect" type="ColorRect" parent="Camera"]
+material = SubResource("ShaderMaterial_j5wjh")
+offset_left = -138.0
+offset_top = -178.0
+offset_right = 1278.0
+offset_bottom = 752.0
+
+[node name="Control" type="Control" parent="Camera"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Camera/Control"]
+layout_mode = 0
+offset_left = 1044.0
+offset_top = 423.0
+offset_right = 1136.0
+offset_bottom = 566.0
+
+[node name="Button" type="Button" parent="Camera/Control/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("9_hve3p")
+theme_override_font_sizes/font_size = 30
+text = "Cam 1"
+
+[node name="Button2" type="Button" parent="Camera/Control/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("9_hve3p")
+theme_override_font_sizes/font_size = 30
+text = "Cam 2"
+
+[node name="Button3" type="Button" parent="Camera/Control/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("9_hve3p")
+theme_override_font_sizes/font_size = 30
+text = "Cam 3"
+
+[node name="blip" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("17_e8heu")
+
+[connection signal="pressed" from="Camera/Control/VBoxContainer/Button" to="Camera" method="_on_button_pressed"]
+[connection signal="pressed" from="Camera/Control/VBoxContainer/Button2" to="Camera" method="_on_button_2_pressed"]
+[connection signal="pressed" from="Camera/Control/VBoxContainer/Button3" to="Camera" method="_on_button_3_pressed"]

@@ -18,10 +18,10 @@ func _process(delta: float) -> void:
 	# Handle Enter key to confirm selection
 	if Input.is_action_just_pressed("ui_accept"):
 		if Global.is_newgame_selected:
-			print("New Game selected!")
+			get_tree().change_scene_to_file("res://game.tscn")
 			# Add your new game logic here
 		elif Global.is_continue_selected:
-			print("Continue selected!")
+			get_tree().change_scene_to_file("res://game.tscn")
 			# Add your continue logic here
 	
 	# Update animation based on selection

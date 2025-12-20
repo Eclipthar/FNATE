@@ -32,6 +32,7 @@ func _ready() -> void:
 	bear_sprites.append(preload("res://Textures/mainbear1.png"))
 	bear_sprites.append(preload("res://Textures/mainbear2.png"))
 	bear_sprites.append(preload("res://Textures/mainbear3.png"))
+	bear_sprites.append(preload("res://Textures/mainbear4.png"))
 	
 	# Set initial random interval
 	twitch_interval = randf_range(3.0, 7.0)
