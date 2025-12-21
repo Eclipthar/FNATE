@@ -88,6 +88,7 @@ sprite_frames = SubResource("SpriteFrames_fc0e3")
 frame_progress = 0.7386845
 
 [node name="Camera" type="Node2D" parent="."]
+visible = false
 script = ExtResource("6_mfdv2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Camera"]

@@ -14,6 +14,27 @@ var office_stare_timer: float = 0.0
 var camera_up_timer: float = 0.0
 var is_jumpscared: bool = false
 
+# Shock system variables
+var shock_cooldown: float = 0.0
+var shock_ready: bool = true
+const SHOCK_COOLDOWN_TIME: float = 5.0  # Seconds before shock is ready again
+var shock_flash_timer: float = 0.0
+var is_shock_flashing: bool = false
+
+# Power outage variables
+var power_out_timer: float = 0.0
+var is_power_out: bool = false
+var power_flicker_timer: float = 0.0
+var power_flicker_state: bool = false  # false = frame 3, true = frame 2
+
+# Location connection map - defines which locations can be reached from each location
+var location_connections = {
+	1: [2, 3],      # Main Stage -> Party Room OR Play Room
+	2: [1, 3],      # Party Room -> Main Stage OR Play Room
+	3: [1, 2, 4],   # Play Room -> Main Stage OR Party Room OR Office
+	4: []           # Office has no exits (player must shock or get jumpscared)
+}
+
 func _ready() -> void:
 	print("=== GAME STARTED ===")
 	# Initialize Darkbear
@@ -28,12 +49,41 @@ func _ready() -> void:
 	print("Darkbear Starting Location: ", Global.darkbear_location, " (Main Stage)")
 	print("Activation Time: ", darkbear_activation_timer, " seconds")
 	print("Movement Check Interval: ", 10.0 / Global.darkbear_AIlv, " seconds")
+	print("CONTROLS: Press SPACE to use shock system")
 	print("===================")
+
+func _input(event):
+	if event.is_action_pressed("ui_accept"):  # SPACE key (default for ui_accept)
+		use_shock()
 
 func _process(delta: float) -> void:
 	# If already jumpscared, don't process anything else
 	if is_jumpscared:
 		return
+	
+	# Check for power outage
+	check_power_status()
+	
+	# Handle power outage sequence
+	if is_power_out:
+		handle_power_outage(delta)
+		return  # Don't process normal game logic during power outage
+	
+	# Handle shock flash effect
+	if is_shock_flashing:
+		shock_flash_timer -= delta
+		if shock_flash_timer <= 0:
+			is_shock_flashing = false
+			print("[SHOCK] Flash effect ended")
+		update_office_sprite()
+		return  # Don't update sprite normally during flash
+	
+	# Update shock cooldown
+	if not shock_ready:
+		shock_cooldown -= delta
+		if shock_cooldown <= 0:
+			shock_ready = true
+			print("[SHOCK] Shock system recharged and ready!")
 	
 	# Update office sprite based on Darkbear location and power status
 	update_office_sprite()
@@ -61,9 +111,58 @@ func _process(delta: float) -> void:
 			print("[CHECK] Movement check triggered!")
 			darkbear_attempt_move()
 	
-	# Handle jumpscare mechanics when Darkbear is in office
-	if Global.darkbear_location == 4:
+	# Handle jumpscare mechanics when Darkbear is in office (only if power is on)
+	if Global.darkbear_location == 4 and not is_power_out:
 		handle_office_jumpscare_mechanics(delta)
+
+func check_power_status() -> void:
+	# Check if power has run out
+	if Global.PowerLV <= 0 and not is_power_out:
+		print("!!! POWER OUT !!!")
+		is_power_out = true
+		power_out_timer = 0.0
+		camera.visible = false  # Force cameras down
+		print("[POWER] Power depleted! Darkbear will arrive in 10 seconds...")
+
+func handle_power_outage(delta: float) -> void:
+	power_out_timer += delta
+	
+	# Phase 1: First 10 seconds - just dark (frame 3)
+	if power_out_timer < 10.0:
+		game_pictures.frame = 3  # Power out, no Darkbear yet
+		
+		# Debug every second
+		if int(power_out_timer) != int(power_out_timer - delta):
+			print("[POWER] Darkbear arrives in ", int(10 - power_out_timer), " seconds...")
+	
+	# Phase 2: Darkbear appears at 10 seconds
+	elif power_out_timer >= 10.0 and Global.darkbear_location != 4:
+		print(">>> DARKBEAR APPEARED IN OFFICE DUE TO POWER OUTAGE! <<<")
+		Global.darkbear_location = 4
+		power_flicker_timer = 0.0
+	
+	# Phase 3: Next 10 seconds - flicker between frames 2 and 3
+	if power_out_timer >= 10.0 and power_out_timer < 20.0:
+		power_flicker_timer += delta
+		
+		# Flicker every 0.3 seconds for creepy effect
+		if power_flicker_timer >= 0.3:
+			power_flicker_timer = 0.0
+			power_flicker_state = not power_flicker_state
+			
+			if power_flicker_state:
+				game_pictures.frame = 2  # Power out WITH Darkbear visible
+			else:
+				game_pictures.frame = 3  # Power out WITHOUT Darkbear visible
+		
+		# Debug every second
+		if int(power_out_timer - 10.0) != int(power_out_timer - 10.0 - delta):
+			print("[POWER] Jumpscare in ", int(20 - power_out_timer), " seconds...")
+	
+	# Phase 4: After 20 seconds total - JUMPSCARE
+	elif power_out_timer >= 20.0:
+		print("!!! POWER OUTAGE JUMPSCARE !!!")
+		trigger_jumpscare()
 
 func handle_office_jumpscare_mechanics(delta: float) -> void:
 	# Check if camera is up using the camera node's visibility
@@ -107,26 +206,63 @@ func trigger_jumpscare() -> void:
 	print(">>> GAME OVER - JUMPSCARED <<<")
 	# You can add additional jumpscare effects here (sound, animation, scene change, etc.)
 
+func use_shock() -> void:
+	"""Call this function when player presses the shock button"""
+	if not shock_ready:
+		print("[SHOCK] Shock on cooldown! ", shock_cooldown, " seconds remaining")
+		return
+	
+	if Global.darkbear_location == 4:
+		print("[SHOCK] *** SHOCK ACTIVATED! Darkbear sent back to Main Stage! ***")
+		Global.darkbear_location = 1
+		office_stare_timer = 0.0
+		camera_up_timer = 0.0
+		
+		# Start shock flash effect (frame 3 for 4 seconds)
+		is_shock_flashing = true
+		shock_flash_timer = 4.0
+		print("[SHOCK] Shock flash effect started (4 seconds)")
+		
+		# Start cooldown
+		shock_ready = false
+		shock_cooldown = SHOCK_COOLDOWN_TIME
+		print("[SHOCK] Shock on cooldown for ", SHOCK_COOLDOWN_TIME, " seconds")
+		
+		# Update sprite immediately to frame 3
+		game_pictures.frame = 3
+	else:
+		print("[SHOCK] Shock wasted! Darkbear is not in the office (location: ", Global.darkbear_location, ")")
+		# Still trigger cooldown even if wasted
+		shock_ready = false
+		shock_cooldown = SHOCK_COOLDOWN_TIME
+
 func update_office_sprite() -> void:
-	var power_out = false  # You'll need to add this to Global or track it here
 	var old_frame = game_pictures.frame
 	
+	# If shock flash is active, keep it at frame 3
+	if is_shock_flashing:
+		game_pictures.frame = 3
+		return
+	
+	# If power is out, don't update sprite here (handled in power outage function)
+	if is_power_out:
+		return
+	
+	# Normal sprite update logic
 	if Global.darkbear_location == 4:  # Darkbear in office
-		if power_out:
-			game_pictures.frame = 2  # In office + power out
-		else:
-			game_pictures.frame = 1  # In office + power on
+		game_pictures.frame = 1  # In office + power on
 	else:  # Darkbear not in office
-		if power_out:
-			game_pictures.frame = 3  # Not in office + power out
-		else:
-			game_pictures.frame = 0  # Not in office + power on
+		game_pictures.frame = 0  # Not in office + power on
 	
 	# Debug: Only print when frame changes
 	if old_frame != game_pictures.frame:
 		print("[SPRITE] Office frame changed: ", old_frame, " -> ", game_pictures.frame)
 
 func darkbear_attempt_move() -> void:
+	# Don't attempt movement if Darkbear is in office (he stays until shocked or jumpscare)
+	if Global.darkbear_location == 4:
+		return
+	
 	# 25% (1/4) chance to move
 	var roll = randf()
 	print("  [ROLL] Movement roll: ", roll, " (needs < 0.25 to move)")
@@ -146,17 +282,20 @@ func darkbear_move_darkbear() -> void:
 		4: "Office"
 	}
 	
-	# Movement path: 1 (Main Stage) -> 2 (Party Room) -> 3 (Play Room) -> 4 (Office)
-	match Global.darkbear_location:
-		1:  # Main Stage
-			Global.darkbear_location = 2  # Move to Party Room
-		2:  # Party Room
-			Global.darkbear_location = 3  # Move to Play Room
-		3:  # Play Room
-			Global.darkbear_location = 4  # Move to Office
-			print(">>> DARKBEAR REACHED OFFICE! Player must use cameras or will be jumpscared! <<<")
-		4:  # Office (should not happen with new logic)
-			trigger_jumpscare()
-			return
+	# Get possible destinations from current location
+	var possible_moves = location_connections[Global.darkbear_location]
+	
+	if possible_moves.size() == 0:
+		print("[ERROR] No valid moves from location ", Global.darkbear_location)
+		return
+	
+	# Randomly choose one of the possible destinations
+	var new_location = possible_moves[randi() % possible_moves.size()]
+	Global.darkbear_location = new_location
+	
+	# Special message if entering office
+	if Global.darkbear_location == 4:
+		print(">>> DARKBEAR REACHED OFFICE! Use shock to send him away or get jumpscared! <<<")
 	
 	print(">>> DARKBEAR MOVED: ", location_names[old_location], " (", old_location, ") -> ", location_names[Global.darkbear_location], " (", Global.darkbear_location, ") <<<")
+	print("    Possible next moves from location ", Global.darkbear_location, ": ", location_connections[Global.darkbear_location])
