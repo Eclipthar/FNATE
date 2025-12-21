@@ -80,8 +80,8 @@ shader_parameter/flicker_color = Color(1, 1, 1, 1)
 shader_parameter/scanlines_count = 5.0
 shader_parameter/scanlines_intensity = 0.1
 shader_parameter/flicker_speed = 20.0
-shader_parameter/flicker_intensity = 0.1670000079325
-shader_parameter/color_offset = 2.0
+shader_parameter/flicker_intensity = 0.182000008645
+shader_parameter/color_offset = 0.5
 shader_parameter/blur = 0.15
 
 [node name="Game" type="Node2D"]
@@ -94,7 +94,6 @@ sprite_frames = SubResource("SpriteFrames_fc0e3")
 frame_progress = 0.7386845
 
 [node name="Camera" type="Node2D" parent="."]
-visible = false
 script = ExtResource("6_mfdv2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Camera"]
@@ -102,6 +101,7 @@ texture_filter = 1
 position = Vector2(576, 324)
 scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_mfdv2")
+frame = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="Camera"]
 texture_filter = 1

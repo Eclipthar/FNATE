@@ -4,6 +4,7 @@ extends Node2D
 @onready var blip: AudioStreamPlayer = $"../blip"
 @onready var camera_flip: AudioStreamPlayer = $"../camera_flip"
 @onready var camera_static: AudioStreamPlayer = $"../camera_static"
+@onready var color_rect: ColorRect = $ColorRect
 
 # Power drain variables
 var power_drain_interval: float = 0.3  # How often to drain power (in seconds)
@@ -26,6 +27,11 @@ func _ready() -> void:
 	# Initialize power if not already set
 	if not "PowerLV" in Global:
 		Global.PowerLV = 100.0
+	
+	# Set default shader parameters
+	if color_rect.material:
+		color_rect.material.set_shader_parameter("flicker_intensity", 0.182)
+		color_rect.material.set_shader_parameter("color_offset", 0.5)
 	
 	print("[CAMERA] Power drain settings: Interval=", power_drain_interval, "s, Step=", power_drain_step)
 	print("[CAMERA] Power recharge settings: Interval=", power_recharge_interval, "s, Step=", power_recharge_step)
@@ -93,14 +99,41 @@ func _process(delta: float) -> void:
 func _on_button_pressed() -> void:
 	Global.current_cam = 1
 	blip.play()
+	# Change shader parameters when switching cameras
+	if color_rect.material:
+		color_rect.material.set_shader_parameter("flicker_intensity", 1.0)
+		color_rect.material.set_shader_parameter("color_offset", 75.0)
+	# Reset to normal after a brief moment (optional)
+	await get_tree().create_timer(0.1).timeout
+	if color_rect.material:
+		color_rect.material.set_shader_parameter("flicker_intensity", 0.182)
+		color_rect.material.set_shader_parameter("color_offset", 0.5)
 
 func _on_button_2_pressed() -> void:
 	Global.current_cam = 2
 	blip.play()
+	# Change shader parameters when switching cameras
+	if color_rect.material:
+		color_rect.material.set_shader_parameter("flicker_intensity", 1.0)
+		color_rect.material.set_shader_parameter("color_offset", 75.0)
+	# Reset to normal after a brief moment
+	await get_tree().create_timer(0.1).timeout
+	if color_rect.material:
+		color_rect.material.set_shader_parameter("flicker_intensity", 0.182)
+		color_rect.material.set_shader_parameter("color_offset", 0.5)
 	
 func _on_button_3_pressed() -> void:
 	Global.current_cam = 3
 	blip.play()
+	# Change shader parameters when switching cameras
+	if color_rect.material:
+		color_rect.material.set_shader_parameter("flicker_intensity", 1.0)
+		color_rect.material.set_shader_parameter("color_offset", 75.0)
+	# Reset to normal after a brief moment
+	await get_tree().create_timer(0.1).timeout
+	if color_rect.material:
+		color_rect.material.set_shader_parameter("flicker_intensity", 0.182)
+		color_rect.material.set_shader_parameter("color_offset", 0.5)
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("opencams"):

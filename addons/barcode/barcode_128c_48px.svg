@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_图层_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 48 48">
+  <!-- Generator: Adobe Illustrator 29.6.0, SVG Export Plug-In . SVG Version: 2.1.1 Build 207)  -->
+  <g>
+    <rect x="34" y="4" width="2" height="18.5" style="fill: #8eef97;"/>
+    <rect x="26" y="4" width="6" height="18.5" style="fill: #8eef97;"/>
+    <rect x="40" y="4" width="6" height="18.5" style="fill: #8eef97;"/>
+    <rect x="20" y="4" width="4" height="18.5" style="fill: #8eef97;"/>
+    <rect x="14" y="4" width="2" height="18.5" style="fill: #8eef97;"/>
+    <rect x="2" y="4" width="4.2" height="18.5" style="fill: #8eef97;"/>
+    <rect x="8" y="4" width="4" height="18.5" style="fill: #8eef97;"/>
+  </g>
+  <path d="M26.2,34.5h-2c-1.1,0-2-.9-2-2v-4c0-1.1.9-2,2-2h4c1.1,0,2,.9,2,2v4c0,1.1-.9,2-2,2h-4c-1.1,0-2,.9-2,2v4c0,1.1.9,2,2,2h4c1.1,0,2-.9,2-2v-4c0-1.1-.9-2-2-2h-2Z" style="fill: none; stroke: #8eef97; stroke-linecap: round; stroke-linejoin: round; stroke-width: 3px;"/>
+  <path d="M9.8,26.5h6c1.1,0,2,.9,2,2v4c0,1.1-.9,2-2,2h-4c-1.1,0-2,.9-2,2v4c0,1.1.9,2,2,2h6" style="fill: none; stroke: #8eef97; stroke-linecap: round; stroke-linejoin: round; stroke-width: 3px;"/>
+  <path d="M3.4,26.5h2v16" style="fill: none; stroke: #8eef97; stroke-linecap: round; stroke-linejoin: round; stroke-width: 3px;"/>
+  <g style="display: none;">
+    <path d="M36.6,42.5v-12c0-2.2,1.8-4,4-4s4,1.8,4,4v12" style="fill: none; stroke: #8eef97; stroke-linecap: round; stroke-linejoin: round; stroke-width: 3px;"/>
+    <path d="M36.6,36.5h8" style="fill: none; stroke: #8eef97; stroke-linecap: round; stroke-linejoin: round; stroke-width: 3px;"/>
+  </g>
+  <path d="M36.6,42.5h4c2.2,0,4-1.8,4-4s-1.8-4-4-4h-4,4c2.2,0,4-1.8,4-4s-1.8-4-4-4h-4v16Z" style="display: none; fill: none; stroke: #8eef97; stroke-linecap: round; stroke-linejoin: round; stroke-width: 3px;"/>
+  <path d="M44.6,30.5c0-2.2-1.8-4-4-4s-4,1.8-4,4v8c0,2.2,1.8,4,4,4s4-1.8,4-4" style="fill: none; stroke: #8eef97; stroke-linecap: round; stroke-linejoin: round; stroke-width: 3px;"/>
+</svg>
