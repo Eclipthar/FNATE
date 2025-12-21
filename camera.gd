@@ -2,22 +2,31 @@ extends Node2D
 
 @onready var camera_pictures: AnimatedSprite2D = $AnimatedSprite2D
 @onready var blip: AudioStreamPlayer = $"../blip"
+@onready var camera_flip: AudioStreamPlayer = $"../camera_flip"
+@onready var camera_static: AudioStreamPlayer = $"../camera_static"
 
 # Power drain variables
-var power_drain_interval: float = 0.1  # How often to drain power (in seconds)
-var power_drain_step: float = 0.5  # How much power to drain per step
+var power_drain_interval: float = 0.3  # How often to drain power (in seconds)
+var power_drain_step: float = 0.7  # How much power to drain per step
 var power_drain_timer: float = 0.0
 
 # Power recharge variables
-var power_recharge_interval: float = 0.5  # How often to recharge power (in seconds)
+var power_recharge_interval: float = 0.2  # How often to recharge power (in seconds)
 var power_recharge_step: float = 0.2  # How much power to recharge per step
 var power_recharge_timer: float = 0.0
 
 func _ready() -> void:
 	visible = false  # Start with this node (Camera) hidden
+	
+	# Set camera_static to loop
+	camera_static.set_stream_paused(false)
+	if camera_static.stream:
+		camera_static.stream.loop = true
+	
 	# Initialize power if not already set
 	if not "PowerLV" in Global:
 		Global.PowerLV = 100.0
+	
 	print("[CAMERA] Power drain settings: Interval=", power_drain_interval, "s, Step=", power_drain_step)
 	print("[CAMERA] Power recharge settings: Interval=", power_recharge_interval, "s, Step=", power_recharge_step)
 
@@ -25,6 +34,7 @@ func _process(delta: float) -> void:
 	# Check if power has run out and cameras are still open
 	if Global.PowerLV <= 0 and visible:
 		visible = false
+		camera_static.stop()  # Stop static sound when cameras forced closed
 		print("[CAMERA] Power depleted! Cameras forced closed!")
 		power_drain_timer = 0.0
 		return
@@ -102,7 +112,11 @@ func _input(event: InputEvent) -> void:
 		visible = !visible  # Toggle visibility of this node
 		
 		if visible:
+			camera_flip.play()  # Play camera flip sound when opening
+			camera_static.play()  # Play static sound when cameras are up
 			print("[CAMERA] Cameras opened - Power draining!")
 		else:
+			camera_flip.play()  # Play camera flip sound when closing
+			camera_static.stop()  # Stop static sound when cameras close
 			print("[CAMERA] Cameras closed - Power drain stopped")
 			power_drain_timer = 0.0  # Reset timer when cameras close

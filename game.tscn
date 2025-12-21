@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c2fqhyc2rx8uu"]
+[gd_scene load_steps=27 format=3 uid="uid://c2fqhyc2rx8uu"]
 
 [ext_resource type="Script" uid="uid://nrsjals5vv1i" path="res://game.gd" id="1_80nbo"]
 [ext_resource type="Texture2D" uid="uid://bggw4gxxijyjm" path="res://Textures/Office/officewithpowernodarkbear.png" id="2_e2o6t"]
@@ -17,6 +17,12 @@
 [ext_resource type="Texture2D" uid="uid://cjnv6ev00cp2b" path="res://Textures/Cameras/cam3_0.png" id="11_7sc4i"]
 [ext_resource type="Texture2D" uid="uid://deybvwncsm7es" path="res://Textures/Cameras/cam3_1.png" id="12_80cx4"]
 [ext_resource type="AudioStream" uid="uid://ce6k1g32dcvtk" path="res://Audio/Blip5.wav" id="17_e8heu"]
+[ext_resource type="AudioStream" uid="uid://ba1q51gtl1yv" path="res://Audio/electric-discharge-386160.mp3" id="18_x5p1p"]
+[ext_resource type="AudioStream" uid="uid://cic2tr0bhthda" path="res://Audio/five-nights-at-freddys-full-scream-sound_2.wav" id="19_qhcbd"]
+[ext_resource type="AudioStream" uid="uid://3550ur3c8rsi" path="res://Audio/powerdown.wav" id="20_f1jbl"]
+[ext_resource type="AudioStream" uid="uid://dlo04c5gpam46" path="res://Audio/put down.wav" id="21_vaj68"]
+[ext_resource type="AudioStream" uid="uid://cdcfgm21tq3h" path="res://Audio/windowscare.wav" id="22_i2p71"]
+[ext_resource type="AudioStream" uid="uid://fyc1nfsx1xfe" path="res://Audio/VIDEOSTATIC.mp3" id="23_qhcbd"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fc0e3"]
 animations = [{
@@ -92,6 +98,7 @@ visible = false
 script = ExtResource("6_mfdv2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Camera"]
+texture_filter = 1
 position = Vector2(576, 324)
 scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_mfdv2")
@@ -99,7 +106,7 @@ sprite_frames = SubResource("SpriteFrames_mfdv2")
 [node name="Sprite2D" type="Sprite2D" parent="Camera"]
 texture_filter = 1
 position = Vector2(576, 324)
-scale = Vector2(0.6, 0.6)
+scale = Vector2(0.595, 0.59)
 texture = ExtResource("6_vef74")
 
 [node name="ColorRect" type="ColorRect" parent="Camera"]
@@ -142,6 +149,26 @@ text = "Cam 3"
 
 [node name="blip" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("17_e8heu")
+
+[node name="shock" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("18_x5p1p")
+
+[node name="jumpscare" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("19_qhcbd")
+volume_db = 24.0
+pitch_scale = 0.75
+
+[node name="powerdown" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("20_f1jbl")
+
+[node name="camera_flip" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("21_vaj68")
+
+[node name="scare" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("22_i2p71")
+
+[node name="camera_static" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("23_qhcbd")
 
 [connection signal="pressed" from="Camera/Control/VBoxContainer/Button" to="Camera" method="_on_button_pressed"]
 [connection signal="pressed" from="Camera/Control/VBoxContainer/Button2" to="Camera" method="_on_button_2_pressed"]

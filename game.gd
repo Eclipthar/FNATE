@@ -3,6 +3,10 @@ extends Node2D
 @onready var game_pictures: AnimatedSprite2D = $Sprite2D
 @onready var camera_pictures: AnimatedSprite2D = $Camera/AnimatedSprite2D
 @onready var camera: Node2D = $Camera
+@onready var scare: AudioStreamPlayer = $scare
+@onready var jumpscare: AudioStreamPlayer = $jumpscare
+@onready var powerdown: AudioStreamPlayer = $powerdown
+@onready var shock: AudioStreamPlayer = $shock
 
 # Darkbear AI variables
 var darkbear_activation_timer: float = 0.0
@@ -27,6 +31,15 @@ var is_power_out: bool = false
 var power_flicker_timer: float = 0.0
 var power_flicker_state: bool = false  # false = frame 3, true = frame 2
 
+# Window shake variables
+var is_shaking: bool = false
+const SHAKE_DURATION: float = 5.0
+const SHAKE_INTENSITY: int = 500
+
+# Konami code variables
+var konami_sequence: Array = ["up", "up", "down", "down", "left", "right", "left", "right", "b", "a"]
+var konami_input: Array = []
+
 # Location connection map - defines which locations can be reached from each location
 var location_connections = {
 	1: [2, 3],      # Main Stage -> Party Room OR Play Room
@@ -45,16 +58,57 @@ func _ready() -> void:
 	darkbear_activation_timer = 60.0 / Global.darkbear_AIlv
 	darkbear_movement_timer = 0.0
 	
+	# Set camera_static to loop if it exists
+	if camera.has_node("../camera_static"):
+		var camera_static = camera.get_node("../camera_static")
+		if camera_static.stream:
+			camera_static.stream.loop = true
+	
 	print("Darkbear AI Level: ", Global.darkbear_AIlv)
 	print("Darkbear Starting Location: ", Global.darkbear_location, " (Main Stage)")
 	print("Activation Time: ", darkbear_activation_timer, " seconds")
 	print("Movement Check Interval: ", 10.0 / Global.darkbear_AIlv, " seconds")
 	print("CONTROLS: Press SPACE to use shock system")
+	print("SECRET: Try the Konami code!")
 	print("===================")
 
 func _input(event):
 	if event.is_action_pressed("ui_accept"):  # SPACE key (default for ui_accept)
 		use_shock()
+	
+	# Konami code detection
+	if event is InputEventKey and event.pressed and not event.echo:
+		var key_name = ""
+		
+		# Map keys to konami sequence names
+		if event.keycode == KEY_UP:
+			key_name = "up"
+		elif event.keycode == KEY_DOWN:
+			key_name = "down"
+		elif event.keycode == KEY_LEFT:
+			key_name = "left"
+		elif event.keycode == KEY_RIGHT:
+			key_name = "right"
+		elif event.keycode == KEY_B:
+			key_name = "b"
+		elif event.keycode == KEY_A:
+			key_name = "a"
+		
+		# If a valid konami key was pressed
+		if key_name != "":
+			konami_input.append(key_name)
+			
+			# Keep only the last 10 inputs
+			if konami_input.size() > 10:
+				konami_input.pop_front()
+			
+			# Check if konami code is complete
+			if konami_input == konami_sequence:
+				print(">>> KONAMI CODE ACTIVATED! DARKBEAR TELEPORTED TO OFFICE! <<<")
+				Global.darkbear_location = 4
+				darkbear_is_active = true
+				scare.play()
+				konami_input.clear()  # Reset after activation
 
 func _process(delta: float) -> void:
 	# If already jumpscared, don't process anything else
@@ -119,6 +173,7 @@ func check_power_status() -> void:
 	# Check if power has run out
 	if Global.PowerLV <= 0 and not is_power_out:
 		print("!!! POWER OUT !!!")
+		powerdown.play()  # Play power down sound
 		is_power_out = true
 		power_out_timer = 0.0
 		camera.visible = false  # Force cameras down
@@ -203,8 +258,15 @@ func trigger_jumpscare() -> void:
 	is_jumpscared = true
 	game_pictures.frame = 4  # Jumpscare frame
 	camera.visible = false  # Force camera down
+	jumpscare.play()  # Play jumpscare sound
 	print(">>> GAME OVER - JUMPSCARED <<<")
-	# You can add additional jumpscare effects here (sound, animation, scene change, etc.)
+	
+	# Start window shake effect and wait for it to complete
+	await start_window_shake()
+	
+	# Return to main menu after shake
+	print("[JUMPSCARE] Returning to main menu...")
+	get_tree().change_scene_to_file("res://mainmenu.tscn")
 
 func use_shock() -> void:
 	"""Call this function when player presses the shock button"""
@@ -214,6 +276,7 @@ func use_shock() -> void:
 	
 	if Global.darkbear_location == 4:
 		print("[SHOCK] *** SHOCK ACTIVATED! Darkbear sent back to Main Stage! ***")
+		shock.play()  # Play shock sound effect
 		Global.darkbear_location = 1
 		office_stare_timer = 0.0
 		camera_up_timer = 0.0
@@ -232,6 +295,7 @@ func use_shock() -> void:
 		game_pictures.frame = 3
 	else:
 		print("[SHOCK] Shock wasted! Darkbear is not in the office (location: ", Global.darkbear_location, ")")
+		shock.play()  # Play shock sound even when wasted
 		# Still trigger cooldown even if wasted
 		shock_ready = false
 		shock_cooldown = SHOCK_COOLDOWN_TIME
@@ -293,9 +357,34 @@ func darkbear_move_darkbear() -> void:
 	var new_location = possible_moves[randi() % possible_moves.size()]
 	Global.darkbear_location = new_location
 	
-	# Special message if entering office
+	# Special message and sound if entering office
 	if Global.darkbear_location == 4:
+		scare.play()  # Play scare sound only when entering office
 		print(">>> DARKBEAR REACHED OFFICE! Use shock to send him away or get jumpscared! <<<")
 	
 	print(">>> DARKBEAR MOVED: ", location_names[old_location], " (", old_location, ") -> ", location_names[Global.darkbear_location], " (", Global.darkbear_location, ") <<<")
 	print("    Possible next moves from location ", Global.darkbear_location, ": ", location_connections[Global.darkbear_location])
+
+func start_window_shake() -> void:
+	if is_shaking:
+		return
+	
+	is_shaking = true
+	var window = get_window()
+	var original_pos = window.position
+	
+	# Simple timer-based approach
+	var elapsed := 0.0
+	
+	while elapsed < SHAKE_DURATION:
+		var shake_x = randi_range(-SHAKE_INTENSITY, SHAKE_INTENSITY)
+		var shake_y = randi_range(-SHAKE_INTENSITY, SHAKE_INTENSITY)
+		window.position = original_pos + Vector2i(shake_x, shake_y)
+		
+		await get_tree().create_timer(0.03).timeout
+		elapsed += 0.03
+	
+	# Restore original position
+	window.position = original_pos
+	is_shaking = false
+	print("[SHAKE] Window shake complete!")

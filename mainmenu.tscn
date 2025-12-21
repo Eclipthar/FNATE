@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b6ded0rmsxkas"]
+[gd_scene load_steps=13 format=3 uid="uid://b6ded0rmsxkas"]
 
 [ext_resource type="Script" uid="uid://cuel0u1duefdm" path="res://Scripts/mainmenu.gd" id="1_3pujl"]
 [ext_resource type="Texture2D" uid="uid://b8ac1idu2nkck" path="res://Textures/mainbear1.png" id="1_d2nv2"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cieexihiryjc" path="res://Textures/newgame.png" id="7_dihg0"]
 [ext_resource type="Script" uid="uid://dqnyoloqek7gt" path="res://Scripts/gamebuttons.gd" id="8_dihg0"]
 [ext_resource type="AudioStream" uid="uid://cjo0rg0y6d801" path="res://Audio/mainmenuambient.wav" id="9_rqglp"]
+[ext_resource type="AudioStream" uid="uid://ce6k1g32dcvtk" path="res://Audio/Blip5.wav" id="10_0y70q"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rqglp"]
 animations = [{
@@ -118,3 +119,6 @@ offset_bottom = 752.0
 stream = ExtResource("9_rqglp")
 volume_db = -20.0
 autoplay = true
+
+[node name="blip" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_0y70q")
