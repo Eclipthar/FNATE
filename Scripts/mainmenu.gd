@@ -5,6 +5,11 @@ func wait(seconds: float):
 	
 @onready var mainbear_1: Sprite2D = $Mainbear1
 
+
+func _input(event):
+	if event.is_action_pressed("ui_cancel"):
+		get_tree().quit()
+
 # Add your different sprite textures here
 var bear_sprites: Array[Texture2D] = []
 var default_sprite: Texture2D
@@ -36,6 +41,20 @@ func _ready() -> void:
 	
 	# Set initial random interval
 	twitch_interval = randf_range(3.0, 7.0)
+	
+	Global.is_disclaimer_showing = true
+	# Nights
+	Global.is_dead = false
+	Global.power_out = false
+	Global.PowerLV = 100
+	# Main Menu
+	Global.is_continue_selected = false
+	Global.is_newgame_selected = true
+	# Dark bear
+	Global.darkbear_AIlv = 3  # Default AI level
+	Global.darkbear_location = 1  # Default starting location
+	# Camera
+	Global.current_cam = 0  # Default camera
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

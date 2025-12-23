@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://c2fqhyc2rx8uu"]
+[gd_scene load_steps=30 format=3 uid="uid://c2fqhyc2rx8uu"]
 
 [ext_resource type="Script" uid="uid://nrsjals5vv1i" path="res://game.gd" id="1_80nbo"]
 [ext_resource type="Texture2D" uid="uid://bggw4gxxijyjm" path="res://Textures/Office/officewithpowernodarkbear.png" id="2_e2o6t"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://wv23wqfg0dgo" path="res://Textures/Cameras/cam2_1.png" id="10_215e1"]
 [ext_resource type="Texture2D" uid="uid://cjnv6ev00cp2b" path="res://Textures/Cameras/cam3_0.png" id="11_7sc4i"]
 [ext_resource type="Texture2D" uid="uid://deybvwncsm7es" path="res://Textures/Cameras/cam3_1.png" id="12_80cx4"]
+[ext_resource type="Texture2D" uid="uid://dfmoeyfvgj4x" path="res://Textures/67.png" id="14_f1jbl"]
 [ext_resource type="AudioStream" uid="uid://ce6k1g32dcvtk" path="res://Audio/Blip5.wav" id="17_e8heu"]
 [ext_resource type="AudioStream" uid="uid://ba1q51gtl1yv" path="res://Audio/electric-discharge-386160.mp3" id="18_x5p1p"]
 [ext_resource type="AudioStream" uid="uid://cic2tr0bhthda" path="res://Audio/five-nights-at-freddys-full-scream-sound_2.wav" id="19_qhcbd"]
@@ -23,6 +24,8 @@
 [ext_resource type="AudioStream" uid="uid://dlo04c5gpam46" path="res://Audio/put down.wav" id="21_vaj68"]
 [ext_resource type="AudioStream" uid="uid://cdcfgm21tq3h" path="res://Audio/windowscare.wav" id="22_i2p71"]
 [ext_resource type="AudioStream" uid="uid://fyc1nfsx1xfe" path="res://Audio/VIDEOSTATIC.mp3" id="23_qhcbd"]
+[ext_resource type="AudioStream" uid="uid://dp3xrj6xytuch" path="res://Audio/music box.wav" id="25_i2p71"]
+[ext_resource type="Script" uid="uid://c5j1bs5n4sif7" path="res://powlabel.gd" id="25_vaj68"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fc0e3"]
 animations = [{
@@ -80,7 +83,7 @@ shader_parameter/flicker_color = Color(1, 1, 1, 1)
 shader_parameter/scanlines_count = 5.0
 shader_parameter/scanlines_intensity = 0.1
 shader_parameter/flicker_speed = 20.0
-shader_parameter/flicker_intensity = 0.182000008645
+shader_parameter/flicker_intensity = 0.0
 shader_parameter/color_offset = 0.5
 shader_parameter/blur = 0.15
 
@@ -94,6 +97,7 @@ sprite_frames = SubResource("SpriteFrames_fc0e3")
 frame_progress = 0.7386845
 
 [node name="Camera" type="Node2D" parent="."]
+visible = false
 script = ExtResource("6_mfdv2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Camera"]
@@ -103,11 +107,61 @@ scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_mfdv2")
 frame = 1
 
+[node name="BB" type="Sprite2D" parent="Camera"]
+visible = false
+position = Vector2(166.99997, 487)
+rotation = 0.49077573
+texture = ExtResource("14_f1jbl")
+
 [node name="Sprite2D" type="Sprite2D" parent="Camera"]
 texture_filter = 1
 position = Vector2(576, 324)
 scale = Vector2(0.595, 0.59)
 texture = ExtResource("6_vef74")
+
+[node name="OfflineSystem" type="Control" parent="Camera"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="Camera/OfflineSystem"]
+layout_mode = 0
+offset_right = 1184.0
+offset_bottom = 699.0
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="Camera/OfflineSystem"]
+layout_mode = 0
+offset_right = 1151.0
+offset_bottom = 212.0
+theme_override_fonts/font = ExtResource("9_hve3p")
+theme_override_font_sizes/font_size = 60
+text = "Camera System Offline.
+
+
+
+
+Please Await The Automatic Reboot.
+
+"
+
+[node name="Label2" type="Label" parent="Camera/OfflineSystem"]
+layout_mode = 0
+offset_top = 187.0
+offset_right = 1262.0
+offset_bottom = 792.0
+theme_override_fonts/font = ExtResource("9_hve3p")
+theme_override_font_sizes/font_size = 60
+text = "
+NO SIGNAL
+
+
+
+
+
+"
 
 [node name="ColorRect" type="ColorRect" parent="Camera"]
 material = SubResource("ShaderMaterial_j5wjh")
@@ -169,6 +223,28 @@ stream = ExtResource("22_i2p71")
 
 [node name="camera_static" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("23_qhcbd")
+
+[node name="music_box" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("25_i2p71")
+volume_db = 2.0
+pitch_scale = 0.8
+
+[node name="Power Level" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Power Level"]
+layout_mode = 0
+offset_left = 480.0
+offset_top = 601.0
+offset_right = 687.0
+offset_bottom = 640.0
+theme_override_fonts/font = ExtResource("9_hve3p")
+theme_override_font_sizes/font_size = 32
+text = "Power : 0%"
+script = ExtResource("25_vaj68")
 
 [connection signal="pressed" from="Camera/Control/VBoxContainer/Button" to="Camera" method="_on_button_pressed"]
 [connection signal="pressed" from="Camera/Control/VBoxContainer/Button2" to="Camera" method="_on_button_2_pressed"]
