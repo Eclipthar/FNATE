@@ -9,7 +9,7 @@ extends Node2D
 @onready var shock: AudioStreamPlayer = $shock
 @onready var music_box: AudioStreamPlayer = $music_box
 
-
+var darkbear_wait_timer := 0.0
 
 # Darkbear AI variables
 var darkbear_activation_timer: float = 0.0
@@ -235,6 +235,26 @@ func handle_power_outage(delta: float) -> void:
 		trigger_jumpscare()
 
 func handle_office_jumpscare_mechanics(delta: float) -> void:
+	# 🚪 DOOR CLOSED — Darkbear waits and leaves
+	if Global.door_state == 1:
+		# Reset jumpscare-related timers
+		camera_up_timer = 0.0
+		office_stare_timer = 0.0
+		
+		darkbear_wait_timer += delta
+		
+		if int(darkbear_wait_timer) != int(darkbear_wait_timer - delta):
+			print("[DOOR CLOSED] Darkbear waiting... ", int(darkbear_wait_timer), "/5")
+		
+		if darkbear_wait_timer >= 5.0:
+			print("[DARKBEAR] Door closed too long, returning.")
+			Global.darkbear_location = 1
+			darkbear_wait_timer = 0.0
+		
+		return  # ⛔ stop here, no jumpscare logic
+	
+	# 🚪 DOOR OPEN — normal jumpscare behavior
+	darkbear_wait_timer = 0.0
 	var camera_is_up = camera.visible
 	
 	if camera_is_up:
@@ -319,9 +339,15 @@ func update_office_sprite() -> void:
 		return
 	
 	if Global.darkbear_location == 4:
-		game_pictures.frame = 1
+		if Global.door_state == 1:
+			game_pictures.frame = 5
+		elif Global.door_state == 0:
+			game_pictures.frame = 1
 	else:
-		game_pictures.frame = 0
+		if Global.door_state == 1:
+			game_pictures.frame = 6
+		elif Global.door_state == 0:
+			game_pictures.frame = 0
 	
 	if old_frame != game_pictures.frame:
 		print("[SPRITE] Office frame changed: ", old_frame, " -> ", game_pictures.frame)

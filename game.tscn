@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://c2fqhyc2rx8uu"]
+[gd_scene load_steps=34 format=3 uid="uid://c2fqhyc2rx8uu"]
 
 [ext_resource type="Script" uid="uid://nrsjals5vv1i" path="res://game.gd" id="1_80nbo"]
 [ext_resource type="Texture2D" uid="uid://dafpv1s67ocbt" path="res://Textures/New Office/officeopen.png" id="2_5b14r"]
@@ -28,6 +28,7 @@
 [ext_resource type="AudioStream" uid="uid://fyc1nfsx1xfe" path="res://Audio/VIDEOSTATIC.mp3" id="23_qhcbd"]
 [ext_resource type="AudioStream" uid="uid://dp3xrj6xytuch" path="res://Audio/music box.wav" id="25_i2p71"]
 [ext_resource type="Script" uid="uid://c5j1bs5n4sif7" path="res://powlabel.gd" id="25_vaj68"]
+[ext_resource type="Script" uid="uid://cbn2ielletrj6" path="res://button_trigger.gd" id="29_bnpwn"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_fc0e3"]
 animations = [{
@@ -94,6 +95,9 @@ shader_parameter/flicker_speed = 20.0
 shader_parameter/flicker_intensity = 0.0
 shader_parameter/color_offset = 0.5
 shader_parameter/blur = 0.15
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bnpwn"]
+size = Vector2(59, 60)
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_80nbo")
@@ -242,6 +246,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="Power Level"]
 layout_mode = 0
@@ -253,7 +258,17 @@ theme_override_fonts/font = ExtResource("9_hve3p")
 theme_override_font_sizes/font_size = 32
 text = "Power : 0%"
 script = ExtResource("25_vaj68")
+metadata/_edit_use_anchors_ = true
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("29_bnpwn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(1045.5, 348)
+shape = SubResource("RectangleShape2D_bnpwn")
 
 [connection signal="pressed" from="Camera/Control/VBoxContainer/Button" to="Camera" method="_on_button_pressed"]
 [connection signal="pressed" from="Camera/Control/VBoxContainer/Button2" to="Camera" method="_on_button_2_pressed"]
 [connection signal="pressed" from="Camera/Control/VBoxContainer/Button3" to="Camera" method="_on_button_3_pressed"]
+[connection signal="mouse_entered" from="Area2D" to="Area2D" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="Area2D" method="_on_mouse_exited"]

@@ -14,3 +14,6 @@ var darkbear_AIlv: int = 3  # Default AI level
 var darkbear_location: int = 1  # Default starting location
 # Camera
 var current_cam: int = 0  # Default camera
+# Door
+var door_disabled = 0
+var door_state = 1
