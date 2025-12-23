@@ -1,16 +1,18 @@
-[gd_scene load_steps=30 format=3 uid="uid://c2fqhyc2rx8uu"]
+[gd_scene load_steps=32 format=3 uid="uid://c2fqhyc2rx8uu"]
 
 [ext_resource type="Script" uid="uid://nrsjals5vv1i" path="res://game.gd" id="1_80nbo"]
-[ext_resource type="Texture2D" uid="uid://bggw4gxxijyjm" path="res://Textures/Office/officewithpowernodarkbear.png" id="2_e2o6t"]
-[ext_resource type="Texture2D" uid="uid://dt73pdoquhilf" path="res://Textures/Office/officewithpowerwithdarkbear.png" id="3_feb5d"]
+[ext_resource type="Texture2D" uid="uid://dafpv1s67ocbt" path="res://Textures/New Office/officeopen.png" id="2_5b14r"]
+[ext_resource type="Texture2D" uid="uid://e61cbiw0u866" path="res://Textures/New Office/officeopendarkbear.png" id="3_bnpwn"]
+[ext_resource type="Texture2D" uid="uid://c112mq5025e5c" path="res://Textures/New Office/prejumpscare_1.png" id="4_36jdj"]
 [ext_resource type="Texture2D" uid="uid://dmrfolnlalx23" path="res://Textures/Cameras/cam1_0.png" id="4_eow3j"]
-[ext_resource type="Texture2D" uid="uid://bl0tk7dujq80i" path="res://Textures/Office/officewithoutpowerwithdarkbear.png" id="4_vef74"]
-[ext_resource type="Texture2D" uid="uid://4wvv32b0lhhd" path="res://Textures/Office/officewithoutpowerwithoutdarkbear.png" id="5_hve3p"]
 [ext_resource type="Texture2D" uid="uid://bhmyy538opiso" path="res://Textures/Cameras/cam1_1.png" id="5_j5wjh"]
+[ext_resource type="Texture2D" uid="uid://d20u6tr7ph5pt" path="res://Textures/New Office/prejumpscare_2.png" id="5_xfvwf"]
 [ext_resource type="Texture2D" uid="uid://d4ni7fm15byp4" path="res://Textures/Office/jumpscare.png" id="6_80cx4"]
 [ext_resource type="Script" uid="uid://b1s58pitonx5w" path="res://camera.gd" id="6_mfdv2"]
 [ext_resource type="Texture2D" uid="uid://cas5ws1l2drit" path="res://Textures/GUICams.png" id="6_vef74"]
+[ext_resource type="Texture2D" uid="uid://cvdyu51sjxv5v" path="res://Textures/New Office/officecloseddarkbear.png" id="7_dhpj7"]
 [ext_resource type="Shader" uid="uid://bn5sg8tw0ee8s" path="res://camera.gdshader" id="7_eow3j"]
+[ext_resource type="Texture2D" uid="uid://bla1uhuitsqbo" path="res://Textures/New Office/officeclosed.png" id="8_7knny"]
 [ext_resource type="FontFile" uid="uid://bj6qoebog85yv" path="res://Fonts/PixelifySans-VariableFont_wght.ttf" id="9_hve3p"]
 [ext_resource type="Texture2D" uid="uid://lr6stdj3aq55" path="res://Textures/Cameras/cam2_0.png" id="9_lc2xo"]
 [ext_resource type="Texture2D" uid="uid://wv23wqfg0dgo" path="res://Textures/Cameras/cam2_1.png" id="10_215e1"]
@@ -31,19 +33,25 @@
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_e2o6t")
+"texture": ExtResource("2_5b14r")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_feb5d")
+"texture": ExtResource("3_bnpwn")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_vef74")
+"texture": ExtResource("4_36jdj")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_hve3p")
+"texture": ExtResource("5_xfvwf")
 }, {
 "duration": 1.0,
 "texture": ExtResource("6_80cx4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_dhpj7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_7knny")
 }],
 "loop": false,
 "name": &"default",
